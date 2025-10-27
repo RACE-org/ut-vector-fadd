@@ -1,0 +1,17 @@
+[project]
+name = "ut-vector-fadd"
+version = "0.1.0"
+description = "Unit test environment for LaneFAdd"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "pytoffee@git+https://github.com/XS-MLVP/toffee@master",
+  "toffee-test@git+https://github.com/XS-MLVP/toffee-test@master"
+]
+
+[tool.pytest.ini_options]
+minversion = 8.0
+pythonpath = "./"
+testpaths = [
+  "tests",
+]
