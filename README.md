@@ -1,6 +1,6 @@
 # ut-vector-fadd
 
-本仓库为**向量浮点混合加法模块(LaneFAdd)**的验证仓库。
+本仓库为 **向量浮点混合加法模块(LaneFAdd)** 的验证仓库。
 ## 任务详情/要求
 
 请查阅仓库中的 [verification_spec.md](./doc/verification_spec.md)。
@@ -11,18 +11,23 @@
 
 ```bash
 .
-├── img
+├── bundles
 ├── doc
-│   └── verification_spec.md
 ├── LaneFAdd
 ├── Makefile
+├── pyproject.toml
 ├── README.md
+├── requirements.txt
 ├── rtl
 └── tests
 ```
 
+- `bundles`：对端口引脚的封装。
 - `doc`：存放各种文档，包含本次验证的任务详情。
 - `LaneFAdd`：用 [picker](https://github.com/XS-MLVP/picker) 工具生成的 Python DUT，通过 `make dut` 命令产生。
+- `Makefile`：包含DUT的构建和清理命令。
+- `pyproject.toml`：项目的基本信息，包含依赖的包。
+- `requirements.txt`：项目依赖的包。
 - `rtl`：存放 RTL 设计，目前仓库只包含 `LaneFAdd.v`。
 - `tests`：存放测试用例。
 
@@ -31,12 +36,21 @@
 > [!TIP]
 > 参与者也可以通过 AI 驱动的 [UCAgent](https://github.com/XS-MLVP/UCAgent) 自动构建验证环境并生成测试用例，随后在此基础之上进行深入的开发和完善。
 
+### 环境配置
+
+参与者可以通过 `pip instsall -r requirements.txt` 安装依赖，对依赖有需要的话可自行维护。
+
+> [!TIP]
+> 如果熟悉 [uv](https://uv.oaix.tech/) 的话，更推荐用uv对项目的环境进行管理。
+
+运行demo：执行 `pytest . -sv --toffee-report` 便会运行用例，运行报告会存放在 `reports` 文件夹中。
+
 ## 如何参与
 
 参与本次验证任务需要完成以下步骤：
 
 1. **填写[报名问卷](https://www.wjx.top/vm/wFU6suy.aspx#)**
-2. **加入 LaneFAdd 验证交流群(上方的微信群)**
+2. **加入 LaneFAdd 验证交流群(qq: 1028824516)**
 3. **完成验证工作**：基于 [ut-vector-fadd](https://github.com/RACE-org/ut-vector-fadd) 仓库提供的验证环境开展验证
 4. **提交PR**：将验证结果通过Pull Request方式提交至该仓库
 
