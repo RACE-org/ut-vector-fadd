@@ -1,0 +1,5 @@
+*.fst
+*.dat
+__pycache__/
+reports/
+LaneFAdd/
