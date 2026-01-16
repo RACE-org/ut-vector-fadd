@@ -21,6 +21,8 @@ pip install -r requirements.txt
 make dut
 ```
 
+> 用途说明：根目录下的 `Makefile` 提供了 DUT 生成与简易回归入口。其中 `make dut` 会调用 `picker` 根据 `rtl/LaneFAdd.sv` 生成 Python DUT（LaneFAdd 目录），并可在仿真中产生 VCD；`make regress <tl.lst>` 则代理到 `sim/Makefile` 执行按 tl 列表的回归。
+
 运行全部用例并生成 HTML 报告：
 
 ```bash
@@ -43,6 +45,13 @@ python3 -m pytest -s --regress --count 5 tests/
 
 ```bash
 python3 -m pytest -s --tl tl/<xxx>.tl.lst tests/
+```
+
+或使用 `sim/Makefile` 的封装：
+
+```bash
+cd sim
+make regress ../tl/<xxx>.tl.lst
 ```
 
 输出说明：
@@ -68,3 +77,21 @@ python3 -m pytest -s --tl tl/<xxx>.tl.lst tests/
 - Reporter 机制说明： [reporter_guide.md](./reporter_guide.md)
 - 总验证报告： [verification_report.md](./verification_report.md)
 - 缺陷清单： [bug_list.pdf](./bug_list.pdf)
+
+## RTL 说明与 Verdi 使用
+
+- RTL 目录包含两个版本：
+  - `LaneFAdd.sv`：最新版本，供 `picker` 导出 Python DUT 与后续仿真使用。
+  - `LaneFAdd.v`：兼容版本。
+- `TOP.v`：用于封装顶层接口，便于 Verdi 正确识别信号层次与波形浏览。
+- 打开 Verdi 的推荐流程：
+  1. 在 `sim/` 目录运行用例并启用波形转换（默认 `wave=on`，需要系统安装 `vcd2fsdb`）：
+     ```bash
+     cd sim
+     make run tc=test_sanity seed=1
+     ```
+  2. 通过 `make verdi` 打开生成的 FSDB 波形（`sim/Makefile` 会使用默认的 `rcfile/novas.rc` 等配置）：
+     ```bash
+     make verdi tc=test_sanity seed=1
+     ```
+  3. 如果需要调整 Verdi 加载的 RTL 文件列表，请修改 `sim/rtl.lst`。

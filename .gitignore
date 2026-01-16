@@ -7,6 +7,7 @@ LaneFAdd/
 sim/*
 !sim/Makefile
 !sim/rcfile/
+!sim/rtl.lst
 sim.log
 .dvt/
 .vscode/
