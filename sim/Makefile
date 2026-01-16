@@ -1,4 +1,4 @@
-.PHONY: run clean help regress
+.PHONY: run clean help
 
 # ==============================================================================
 # Configuration
@@ -23,8 +23,6 @@ wave ?= on
 help:
 	@echo "Usage (run inside sim/ directory):"
 	@echo "  make run tc=NAME [seed=N] [wave=on] - Run specific test case"
-	@echo "  make -f regress.mk regress tl.lst [REG_WAVE=on] - Run tl file"
-	@echo "  make regress ./path/to.tl.lst [REG_JOBS=N] - Simple regression"
 	@echo "  make verdi tc=NAME [seed=N]         - Open waveform in Verdi"
 	@echo "  make clean                          - Clean generated reports and cache"
 	@echo ""
