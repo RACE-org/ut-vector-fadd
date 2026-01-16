@@ -64,6 +64,13 @@
 
 参与者可以通过 `pip install -r requirements.txt` 安装依赖，对依赖有需要的话可自行维护。
 
+本 fork 相比上游 `requirements.txt`（仅 `pytoffee/toffee-test`）额外引入：
+
+- `Pyvsc`：约束随机能力（用例里 `randomize_with()`/`dist` 等）
+- `pytest-xdist`：并行回归
+- `tabulate`：事务/报告表格打印
+- `numpy`、`ml_dtypes`：浮点/数据类型相关基础支持
+
 > [!TIP]
 > 如果熟悉 [uv](https://uv.oaix.tech/) 的话，更推荐用uv对项目的环境进行管理。
 

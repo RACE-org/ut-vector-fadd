@@ -15,6 +15,15 @@
 pip install -r requirements.txt
 ```
 
+### 相比上游新增的 Python 依赖
+
+上游 `requirements.txt` 仅包含 `pytoffee/toffee-test` 两项。本 fork 为了支持约束随机、并行回归与更友好的打印/数值处理，额外引入了以下依赖（均已写入 [requirements.txt](../requirements.txt)）：
+
+- `Pyvsc`：约束随机（用例里 `randomize_with()`/`dist/foreach` 等）
+- `pytest-xdist`：并行/分布式回归支撑（回归模式下多进程跑用例）
+- `tabulate`：事务/报告的表格化打印
+- `numpy`、`ml_dtypes`：浮点/数据类型相关的基础支持（部分参考模型/数据处理会用到）
+
 生成 DUT（如果需要重新生成）：
 
 ```bash
