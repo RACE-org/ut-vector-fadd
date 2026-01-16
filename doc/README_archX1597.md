@@ -78,7 +78,7 @@ python3 -m pytest -s --tl tl/<xxx>.tl.lst tests/
   - `LaneFAdd.v`：兼容版本。
 - `TOP.v`：用于封装顶层接口，便于 Verdi 正确识别信号层次与波形浏览。
 - 打开 Verdi 的推荐流程：
-  1. 在 `sim/` 目录运行用例并启用波形转换（默认 `wave=on`，需要系统安装 `vcd2fsdb`）：
+  1. 在 `sim/` 目录运行用例并启用波形转换（默认 `wave=on`，需要系统安装 `vcd2fsdb(Verdi自带工具)`）：
      ```bash
      cd sim
      make run tc=test_sanity seed=1
