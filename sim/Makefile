@@ -97,10 +97,3 @@ verdi:
 clean:
 	@rm -rf __pycache__ .pytest_cache
 	@rm -rf $(REPORT_DIR)
-regress:
-	@TL_ARG=$$(echo "$(MAKECMDGOALS)" | awk '{for(i=1;i<=NF;i++) if($$i!="regress") {print $$i; exit}}'); \
-	if [ -n "$$TL_ARG" ]; then \
-		$(MAKE) -f regress.mk regress TL_LIST=$$TL_ARG; \
-	else \
-		$(MAKE) -f regress.mk regress; \
-	fi

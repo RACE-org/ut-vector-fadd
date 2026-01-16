@@ -21,7 +21,7 @@ pip install -r requirements.txt
 make dut
 ```
 
-> 用途说明：根目录下的 `Makefile` 提供了 DUT 生成与简易回归入口。其中 `make dut` 会调用 `picker` 根据 `rtl/LaneFAdd.sv` 生成 Python DUT（LaneFAdd 目录），并可在仿真中产生 VCD；`make regress <tl.lst>` 则代理到 `sim/Makefile` 执行按 tl 列表的回归。
+> 用途说明：根目录下的 `Makefile` 用于 DUT 生成与清理。其中 `make dut` 会调用 `picker` 根据 `rtl/LaneFAdd.sv` 生成 Python DUT（LaneFAdd 目录），并可在仿真中产生 VCD。
 
 运行全部用例并生成 HTML 报告：
 
@@ -47,13 +47,6 @@ python3 -m pytest -s --regress --count 5 tests/
 python3 -m pytest -s --tl tl/<xxx>.tl.lst tests/
 ```
 
-或使用 `sim/Makefile` 的封装：
-
-```bash
-cd sim
-make regress ../tl/<xxx>.tl.lst
-```
-
 输出说明：
 
 - 每用例日志：`./report_log/<test_name>_<seed>.log`
@@ -67,7 +60,7 @@ make regress ../tl/<xxx>.tl.lst
 - `report_log/`：运行后生成的每用例独立日志输出目录（文件名包含 test_name 与 seed）。
 - `reports/`：运行后生成的 pytest HTML 报告输出目录（`--toffee-report` 生成）。
 - `tl/`：回归列表（支持指定次数与可选 wave 标记）。
-- `sim/`：仿真相关 Makefile 与波形配置（如 rcfile）。
+- `sim/`：单用例运行与 Verdi 打开波形的便捷入口（Makefile/rcfile 等）。
 
 ## 文档入口
 
