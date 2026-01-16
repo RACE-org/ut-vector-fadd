@@ -1,40 +1,15 @@
-# prj_Reporter Guide
+# prj_Reporter 使用指南
 
-本项目使用 UVM 风格的单例 Reporter 作为统一日志与统计机制，核心目标是：**每个 pytest 用例一份独立日志**，并且日志带仿真时钟时间戳，方便定位波形与事务。
+本仓库的 Reporter 是一个 UVM 风格的单例日志/统计器，和 DUT 的仿真时钟绑定，输出统一的“Cycle/Time + 等级 + caller + 文本”格式，并在每个 pytest 用例内生成独立日志文件。
 
-## 1. 机制总览
+## 1. 快速开始（你真正需要记住的）
 
-- 单例：全局只有一个 `Reporter` 实例；多次 `get_reporter()` 只会返回同一个对象。
-- 仿真时间戳：输出的 `Cycle/Time` 来自 `dut.xclock.clk`（因此 Reporter 需要绑定 DUT）。
-- 分级过滤：当 `level > verbosity` 时消息被过滤；`ERROR/FATAL` 为负值，不会被过滤。
-- 双通道输出：始终输出到 stdout；如果创建时传入 `log_file_path`，同时写入日志文件（写文件时会去掉 ANSI 颜色码）。
+在本项目里，你通常只需要关心两件事：
 
-实现入口：
-- Reporter 实现：[prj_reporter.py](file:///home/icvm/verify/ut-vector-fadd/env/common/prj_reporter.py)
+- `SEED=<seed>`：控制随机种子
+- `REPORT_LEVEL=<level>`：控制输出量（默认 `LOW`）
 
-## 2. pytest 集成方式（实际运行时你需要知道的）
-
-Reporter 的创建与绑定在 fixture 中完成： [conftest.py](file:///home/icvm/verify/ut-vector-fadd/tests/conftest.py)
-
-每个 pytest 用例执行 `vfadd_setup` 时会：
-
-- 生成/确定 `SEED`（来自参数化/`--seed`/环境变量）
-- 创建 DUT 并启动时钟
-- `Reporter.reset_instance()`，保证每个用例使用全新的 Reporter（避免日志文件复用）
-- 生成日志路径：`./report_log/<test_name>_<seed>.log`
-- `get_reporter(log_file_path=..., dut=dut)`，绑定 DUT 并开启落盘
-- 从 `REPORT_LEVEL` 读取 verbosity 并 `report_pre(test_name, seed)` 打印用例头
-
-因此：**业务代码不要再负责创建 Reporter**，只需要 `get_reporter()` 取实例即可。
-
-## 3. 运行与环境变量
-
-常用环境变量：
-
-- `SEED`：随机种子（每个用例会被写回到环境变量中，便于日志记录）
-- `REPORT_LEVEL`：日志等级阈值，默认 `LOW`
-
-示例：
+示例（单用例）：
 
 ```bash
 SEED=1 REPORT_LEVEL=LOW python3 -m pytest -s -k test_sanity tests/
@@ -42,11 +17,34 @@ SEED=1 REPORT_LEVEL=LOW python3 -m pytest -s -k test_sanity tests/
 
 日志输出位置：
 
-- `./report_log/<pytest_node_name>_<seed>.log`
+- `./report_log/<test_name>_<seed>.log`（每个 pytest 用例一份日志）
 
-## 4. 日志等级（ReportLevel）
+## 2. 设计要点（为什么这样设计）
 
-当前枚举值（按实现）：
+- 单例：全局只存在一个 `Reporter` 实例；重复调用 `get_reporter()` 只是拿同一个对象。
+- 与 DUT 绑定：时间戳来自 `dut.xclock.clk`，输出形如 `Cycle: <clk> Time:<2*clk+1>`。
+- 分级过滤：满足 `level <= verbosity` 才输出；`ERROR/FATAL` 等级是负值，永远不会被过滤。
+- 双通道输出：始终打印到 stdout；如果创建时传入 `log_file_path`，同时写入该文件（自动去掉 ANSI 颜色码）。
+- pytest 集成：每个测试用例都会 `Reporter.reset_instance()` 并重新创建带 `log_file_path` 的实例，保证“每用例一份日志”。
+
+## 3. pytest 集成方式（实际运行时怎么工作）
+
+Reporter 的创建与绑定在 `vfadd_setup` fixture 中完成： [conftest.py](../tests/conftest.py)
+
+每个 pytest 用例执行 `vfadd_setup` 时会：
+
+- 解析/确定 seed（来自参数化 / `--seed` / `SEED` 环境变量）
+- 创建 DUT + 启动时钟
+- `Reporter.reset_instance()`：避免跨 test 复用旧日志文件
+- 生成日志路径：`./report_log/<test_name>_<seed>.log`
+- `get_reporter(log_file_path=..., dut=dut)`：绑定 DUT + 让日志落盘
+- 从环境变量 `REPORT_LEVEL` 读取日志等级（默认 `LOW`），并 `report_pre(test_name, seed)` 打印用例头信息
+
+因此：业务代码不要再负责创建 Reporter，只需要 `get_reporter()` 取实例即可。
+
+## 4. 报告等级（ReportLevel）
+
+当前 `ReportLevel`（见 [prj_reporter.py](../env/common/prj_reporter.py)）是：
 
 - `FATAL = -2`
 - `ERROR = -1`
@@ -57,42 +55,61 @@ SEED=1 REPORT_LEVEL=LOW python3 -m pytest -s -k test_sanity tests/
 - `FULL  = 400`
 - `DEBUG = 500`
 
-过滤规则：`level > verbosity` 会被过滤，所以想看 `DEBUG` 需要把 `REPORT_LEVEL=DEBUG`。
+过滤规则：`level > verbosity` 会被过滤；因此 `DEBUG` 是最“吵”的级别，只有把 `REPORT_LEVEL=DEBUG` 才会显示。
 
-## 5. 常用 API（推荐用法）
+## 5. 常用 API（按当前实现）
 
-推荐导入：
+### 5.1 获取实例
 
-- `from env.common.prj_reporter import get_reporter, ReportLevel`
+- 推荐：`from env.common.prj_reporter import get_reporter, ReportLevel`
+- fixture 内已经创建过实例时，业务代码直接 `get_reporter()` 取即可。
 
-常用调用：
+### 5.2 打印消息
 
 - `report_msg(caller, message, level=ReportLevel.MEDIUM)`：常规日志
-- `report_warning(caller, message)`：警告（计数 +1，按 HIGH 输出）
-- `report_error(caller, message)`：错误（计数 +1，永不被过滤）
-- `print_summary()`：打印 message/warning/error 统计
-- `has_errors()`：判断是否发生错误
+- `report_warning(caller, message)`：警告（内部会 +1 warning 计数，并以 HIGH 等级输出）
+- `report_error(caller, message)`：错误（内部会 +1 error 计数）
+- `report_fatal(caller, message, exit_code=1)`：同步 fatal，直接 `sys.exit`
+- `report_fatal_async(...)`：异步 fatal，会先取消 asyncio tasks，再进入 report phase callback（如果设置过）
 
-caller 命名建议：
+### 5.3 统计/摘要
 
-- 用组件/模块名做 caller：`vfadd_rm`、`vfadd_master_agent`、`vfadd_xaction.reconstruct` 等
+- `print_summary()`：打印当前统计（message/warning/error）
+- `has_errors()` / `get_error_count()` / `get_warning_count()`
+- `clear_counters()`：清零计数
 
-## 6. 常见坑与建议
+### 5.4 用例头信息
 
-### 6.1 纯 Python 脚本里直接用 Reporter
+- `report_pre(case_name, seed)`：打印 TEST CASE START 块（fixture 已调用）
+- `report_post()`：当前是 placeholder（不输出）
 
-Reporter 默认会输出仿真时间戳；如果没有绑定 `dut`，会在访问 `dut.xclock` 时失败。
+## 6. 推荐用法（在本项目里的写法）
 
-建议：
+### 6.1 在组件里保存引用
 
-- 在 pytest/仿真环境里使用（fixture 会传 `dut`），或
-- 在脚本里显式创建时关闭时间戳（仅用于脱离仿真环境的脚本场景）
+- 在类 `__init__` 里：`self.prj_reporter = get_reporter()`
+- 日志 caller 统一用组件名，例如：`vfadd_rm` / `vfadd_master_agent` / `vfadd_xaction.reconstruct`
 
-### 6.2 为什么 ERROR/FATAL 不受 REPORT_LEVEL 影响？
+### 6.2 不要在业务代码里重建 Reporter
 
-因为它们是负值等级，过滤条件是 `level > verbosity`，负值不会大于任何 verbosity。
+- 业务代码不要再 `Reporter.get_instance(...)` 传 `log_file_path`，避免抢占/覆盖 fixture 已经打开的日志文件。
+- 需要“每用例一份日志”由 fixture 负责。
 
-### 6.3 回归输出太多怎么办？
+## 7. 常见问题（按当前实现）
+
+### 7.1 纯 Python 脚本里直接用 Reporter 会报错？
+
+如果没有传入 `dut`，但又开启了 timestamp（默认开启），Reporter 会在取 `dut.xclock.clk` 时出错。
+
+解决思路（任选其一）：
+
+- 在仿真环境中使用（fixture 会传 `dut`）
+- 或者用 `Reporter.get_instance(enable_timestamp=False, dut=None)`（需要你在脚本里显式这么创建）
+
+### 7.2 为什么 `ERROR/FATAL` 永远会打印？
+
+因为它们的 level 是负值，过滤条件是 `level > verbosity`，负值不会大于任何 verbosity。
+
+### 7.3 输出太多怎么办？
 
 用 `REPORT_LEVEL=HIGH` 或 `REPORT_LEVEL=MEDIUM` 降低输出量；错误仍会完整输出。
-
