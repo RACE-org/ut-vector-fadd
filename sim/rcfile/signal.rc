@@ -1,0 +1,262 @@
+Magic 271485
+Revision Verdi_V-2023.12-SP2
+
+; Window Layout <x> <y> <width> <height> <signalwidth> <valuewidth>
+viewPort 0 27 2560 429 476 174
+
+; File list:
+; openDirFile [-d delimiter] [-s time_offset] [-rf auto_bus_rule_file] path_name file_name
+openDirFile -d / "" "/home/icvm/verify/ut-vector-fadd/sim/report/test_widen_random_0_report/DUTLaneFAdd_test_widen_random_b8f04875_0.fsdb"
+
+; file time scale:
+; fileTimeScale ### s|ms|us|ns|ps
+
+; signal spacing:
+signalSpacing 10
+
+; windowTimeUnit is used for zoom, cursor & marker
+; waveform viewport range
+zoom 15.284946 26.715054
+cursor 19.00397812866
+marker 0.000000
+
+; user define markers
+; userMarker time_pos marker_name color linestyle
+; visible top row signal index
+top 156
+; marker line index
+markerPos 157
+
+; event list
+; addEvent event_name event_expression
+; curEvent event_name
+
+
+
+COMPLEX_EVENT_BEGIN
+
+
+COMPLEX_EVENT_END
+
+
+
+; toolbar current search type
+; curSTATUS search_type
+curSTATUS ByValue
+
+
+addGroup "op_orin"
+activeDirFile "" "/home/icvm/verify/ut-vector-fadd/sim/report/test_widen_random_0_report/DUTLaneFAdd_test_widen_random_b8f04875_0.fsdb"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_vs1[63:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs2[63:0]
+addSignal -h 25 -holdScope io_in_valid
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_rs1[63:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope rs1[63:0]
+addGroup "vfadd_op_fp16_bf16_mode" -e FALSE
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_rs1[63:0]
+addSubGroup "vs1"
+endSubGroup "vs1"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_vs1[63:48]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs1[47:32]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs1[31:16]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs1[15:0]
+addSubGroup "vs2"
+endSubGroup "vs2"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_vs2[63:48]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs2[47:32]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs2[31:16]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs2[15:0]
+addGroup "vfadd_op_fp32_mode" -e FALSE
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/vfadd1/io_valid_in
+addSignal -h 25 /TOP/LaneFAdd_top/clock
+addSubGroup "rs1" -e FALSE
+endSubGroup "rs1"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/io_in_bits_rs1[63:32]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_rs1[31:0]
+addSubGroup "vs1"
+endSubGroup "vs1"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/io_in_bits_vs1[63:32]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs1[31:0]
+addSubGroup "vs2"
+endSubGroup "vs2"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/io_in_bits_vs2[63:32]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs2[31:0]
+addGroup "eff_uop_code" -e FALSE
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_uop_uopIdx[2:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_out_bits_r_uop_uopIdx[2:0]
+addSignal -h 25 /TOP/LaneFAdd_top/clock
+addSignal -h 25 -holdScope io_in_bits_uop_ctrl_vfadd
+addSignal -h 25 -holdScope io_in_bits_uop_ctrl_vfcvt
+addSignal -h 25 -holdScope io_in_bits_uop_ctrl_vfma
+addSignal -h 25 -holdScope io_in_bits_uop_ctrl_widen
+addGroup "eff_func6_code" -e FALSE
+addSignal -h 25 /TOP/LaneFAdd_top/clock
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_uop_ctrl_funct3[2:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_uop_ctrl_funct6[5:0]
+addGroup "sew" -e FALSE
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/io_sewIn_oneHot_0
+addSignal -h 25 -holdScope io_sewIn_oneHot_1
+addSignal -h 25 -holdScope io_sewIn_oneHot_2
+addSignal -h 25 -holdScope io_sewIn_oneHot_3
+addGroup "out_op" -e FALSE
+addSignal -h 25 /TOP/LaneFAdd_top/clock
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/io_out_valid
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/io_out_bits_vd[63:0]
+addSignal -h 25 -holdScope io_rd_valid
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/io_rd_bits[63:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope _vs1_32b_0_T_5[31:0]
+addSubGroup "/TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5@19(1ps)#ActiveDriver"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5[31:0]
+addSubGroup "/TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5#Load"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5[31:0]
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/exp_high_b[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope exp_high_b[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope exp_low_b[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope frac_high_b_16[9:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope frac_low_b_16[9:0]
+addSignal -h 25 -holdScope frac_is_0_32_1
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/fadd_extSig_fp32/shiftRight_out_shiftRight_res_shiftRightJam/io_out[26:0]
+addSignal -h 25 -holdScope io_sticky
+endSubGroup "/TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5#Load"
+addSubGroup "/TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5@19(1ps)#ActiveDriver"
+endSubGroup "/TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5@19(1ps)#ActiveDriver"
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_uop_ctrl_funct3[2]
+addSignal -h 25 -holdScope io_in_bits_uop_uopIdx[0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs1[15:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs1[31:16]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_in_bits_vs1[47:32]
+addSignal -h 25 -holdScope is_widen
+addSignal -h 25 -UNSIGNED -HEX -holdScope rs1[31:0]
+endSubGroup "/TOP/LaneFAdd_top/LaneFAdd/_vs1_32b_0_T_5@19(1ps)#ActiveDriver"
+addGroup "vfadd0"
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_is_widen
+addSignal -h 25 -holdScope io_a_already_widen
+addSignal -h 25 -UNSIGNED -HEX -holdScope exp_high_a[7:0]
+addSignal -h 25 /TOP/LaneFAdd_top/io_in_bits_uop_ctrl_widen2
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/io_in_bits_uop_ctrl_widen
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_b[31:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_a[31:0]
+addSignal -h 25 -holdScope io_is_bf16
+addSignal -h 25 -holdScope io_valid_in
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_b[31:0]
+addSignal -h 25 -holdScope res_is_32_S2
+addSignal -h 25 -holdScope res_is_32_S2
+addSignal -h 25 -UNSIGNED -BIN -holdScope io_res[31:0]
+addSubGroup "/TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_res@17(1ps)#ActiveDriver" -e FALSE
+addSignal -expanded -h 25 -UNSIGNED -BIN /TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_res[31:0]
+addSignal -h 25 -holdScope io_res[31]
+addSignal -h 25 -holdScope io_res[30]
+addSignal -h 25 -holdScope io_res[29]
+addSignal -h 25 -holdScope io_res[28]
+addSignal -h 25 -holdScope io_res[27]
+addSignal -h 25 -holdScope io_res[26]
+addSignal -h 25 -holdScope io_res[25]
+addSignal -h 25 -holdScope io_res[24]
+addSignal -h 25 -holdScope io_res[23]
+addSignal -h 25 -holdScope io_res[22]
+addSignal -h 25 -holdScope io_res[21]
+addSignal -h 25 -holdScope io_res[20]
+addSignal -h 25 -holdScope io_res[19]
+addSignal -h 25 -holdScope io_res[18]
+addSignal -h 25 -holdScope io_res[17]
+addSignal -h 25 -holdScope io_res[16]
+addSignal -h 25 -holdScope io_res[15]
+addSignal -h 25 -holdScope io_res[14]
+addSignal -h 25 -holdScope io_res[13]
+addSignal -h 25 -holdScope io_res[12]
+addSignal -h 25 -holdScope io_res[11]
+addSignal -h 25 -holdScope io_res[10]
+addSignal -h 25 -holdScope io_res[9]
+addSignal -h 25 -holdScope io_res[8]
+addSignal -h 25 -holdScope io_res[7]
+addSignal -h 25 -holdScope io_res[6]
+addSignal -h 25 -holdScope io_res[5]
+addSignal -h 25 -holdScope io_res[4]
+addSignal -h 25 -holdScope io_res[3]
+addSignal -h 25 -holdScope io_res[2]
+addSignal -h 25 -holdScope io_res[1]
+addSignal -h 25 -holdScope io_res[0]
+addSignal -h 25 -UNSIGNED -BIN -holdScope exp_res_high[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope exp_res_high[4:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope exp_res_low[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope exp_res_low[4:0]
+addSignal -h 25 -holdScope isInf_res_high
+addSignal -h 25 -holdScope isInf_res_low
+addSignal -h 25 -holdScope res_extSig_fp19_S2_sign
+addSignal -h 25 -holdScope res_extSig_fp32_S2_sign
+addSignal -h 25 -holdScope res_is_32_S2
+addSignal -h 25 -holdScope res_is_fp16_S2
+addSignal -h 25 -holdScope res_is_nan_high_S2
+addSignal -h 25 -holdScope res_is_nan_low_S2
+addSignal -h 25 -holdScope res_is_negInf_high_S2
+addSignal -h 25 -holdScope res_is_negInf_low_S2
+addSignal -h 25 -holdScope res_is_posInf_high_S2
+addSignal -h 25 -holdScope res_is_posInf_low_S2
+addSignal -h 25 -UNSIGNED -HEX -holdScope sig_res_high[22:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope sig_res_high[22:13]
+addSignal -h 25 -UNSIGNED -HEX -holdScope sig_res_high[22:16]
+addSignal -h 25 -UNSIGNED -HEX -holdScope sig_res_low[9:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope sig_res_low[9:3]
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/fadd_extSig_fp32/io_res_exp[7:0]
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/_exp_adjust_res_high_T_1[7:0]
+addSignal -h 25 -holdScope sig_res_high[23]
+endSubGroup "/TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_res@17(1ps)#ActiveDriver"
+addSignal -h 25 -UNSIGNED -BIN /TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_res[31:0]
+addSignal -h 25 -UNSIGNED -BIN -holdScope io_res[31:0]
+addSignal -h 25 -holdScope res_extSig_fp32_S2_sign
+addSignal -h 25 -UNSIGNED -BIN -holdScope exp_res_high[7:0]
+addSignal -h 25 -UNSIGNED -BIN -holdScope exp_res_high[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope sig_res_high[22:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope res_extSig_fp32_S2_sig[27:4]
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/fadd_extSig_fp32/io_res_sig[27:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_res_sig[27:0]
+addGroup "vfadd0_fp32"
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/vfadd0/is_subnorm_0
+addSignal -h 25 -holdScope is_subnorm_1
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/vfadd0/fadd_extSig_fp32/io_valid_in
+addSignal -h 25 -holdScope io_a_sign
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_a_exp[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_a_sig[26:0]
+addSignal -h 25 -holdScope io_b_sign
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_b_exp[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_b_exp[7:0]
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_b[22:16]
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/vfadd0/fadd_extSig_fp32/io_is_fp16
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/vfadd0/io_is_fp16
+addSignal -h 25 -UNSIGNED -HEX -holdScope frac_high_b_16[9:0]
+addSignal -h 25 -holdScope is_16
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd0/fadd_extSig_fp32/io_b_sig[26:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_b_exp[7:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_res_sig[27:0]
+addGroup "vfadd1"
+addSignal -h 25 /TOP/LaneFAdd_top/LaneFAdd/vfadd1/io_valid_in
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_b[31:0]
+addSignal -h 25 -UNSIGNED -HEX -holdScope io_a[31:0]
+addSignal -h 25 -holdScope is_16
+addSubGroup "vfadd1"
+endSubGroup "vfadd1"
+addSignal -h 25 -UNSIGNED -HEX /TOP/LaneFAdd_top/LaneFAdd/vfadd1/io_res[31:0]
+addGroup "G11"
+
+; getSignalForm Scope Hierarchy Status
+; active file of getSignalForm
+activeDirFile "" "/home/icvm/verify/ut-vector-fadd/sim/report/test_widen_random_0_report/DUTLaneFAdd_test_widen_random_b8f04875_0.fsdb"
+
+GETSIGNALFORM_SCOPE_HIERARCHY_BEGIN
+getSignalForm close
+
+"/TOP"
+"/TOP/LaneFAdd_top"
+"/TOP/LaneFAdd_top/LaneFAdd"
+
+SCOPE_LIST_BEGIN
+"/TOP"
+"/TOP/LaneFAdd_top"
+"/TOP/LaneFAdd_top/LaneFAdd"
+"/TOP/LaneFAdd_top/LaneFAdd/vfadd0"
+"/TOP/LaneFAdd_top/LaneFAdd/vfadd1"
+SCOPE_LIST_END
+
+GETSIGNALFORM_SCOPE_HIERARCHY_END
+
+

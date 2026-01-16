@@ -1,2 +1,7 @@
 pytoffee@git+https://github.com/XS-MLVP/toffee@master
 toffee-test@git+https://github.com/XS-MLVP/toffee-test@master
+tabulate
+numpy
+ml_dtypes
+Pyvsc
+pytest-xdist

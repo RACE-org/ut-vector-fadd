@@ -2,4 +2,13 @@
 *.dat
 __pycache__/
 reports/
+reports_log/
 LaneFAdd/
+sim/*
+!sim/Makefile
+!sim/rcfile/
+sim.log
+.dvt/
+.vscode/
+dvt_build.log
+*.log

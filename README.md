@@ -1,33 +1,52 @@
 # ut-vector-fadd
 
 本仓库为 **向量浮点混合加法模块(LaneFAdd)** 的验证仓库。
+
+本仓库fork自[ut-vector-fadd](https://github.com/RACE-org/ut-vector-fadd)，并对其进行了修改。
+基本完成了一个可以直接运行、随机化、回归约束的验证环境。相比原仓库主要引入了PyVSC来实现随机化和约束。以及引入了部分Numpy来处理浮点数据。
+
+## 快速入口
+
+- 任务规格： [verification_spec.md](./doc/verification_spec.md)
+- 验证点/用例与覆盖反标： [verification_points.md](./doc/verification_points.md)
+- 验证环境指南（含 transaction 重点说明）： [vfadd_env_guide.md](./doc/vfadd_env_guide.md)
+- Reporter 机制说明： [reporter_guide.md](./doc/reporter_guide.md)
+- 总验证报告： [verification_report.md](./doc/verification_report.md)
+- 缺陷清单： [bug_list.md](./doc/bug_list.md)
+
 ## 任务详情/要求
 
 请查阅仓库中的 [verification_spec.md](./doc/verification_spec.md)。
 
 ## 环境介绍
 
-目前本仓库提供了一个基础的环境，包含以下内容：
+目前本仓库提供了一个可直接运行的验证环境，包含以下内容：
 
 ```bash
 .
 ├── bundles
+├── env
 ├── doc
 ├── LaneFAdd
 ├── Makefile
 ├── pyproject.toml
 ├── README.md
+├── report_log
+├── reports
 ├── requirements.txt
 ├── rtl
 └── tests
 ```
 
 - `bundles`：对端口引脚的封装。
+- `env`：验证环境实现（agent/rm/transaction/common 组件等）。
 - `doc`：存放各种文档，包含本次验证的任务详情。
 - `LaneFAdd`：用 [picker](https://github.com/XS-MLVP/picker) 工具生成的 Python DUT，通过 `make dut` 命令产生。
 - `Makefile`：包含DUT的构建和清理命令。
 - `pyproject.toml`：项目的基本信息，包含依赖的包。
 - `requirements.txt`：项目依赖的包。
+- `report_log`：每个 pytest 用例的独立日志输出目录（文件名包含 test_name 与 seed）。
+- `reports`：pytest HTML 报告输出目录（`--toffee-report` 生成）。
 - `rtl`：存放 RTL 设计，目前仓库只包含 `LaneFAdd.v`。
 - `tests`：存放测试用例。
 
@@ -38,12 +57,52 @@
 
 ### 环境配置
 
-参与者可以通过 `pip instsall -r requirements.txt` 安装依赖，对依赖有需要的话可自行维护。
+参与者可以通过 `pip install -r requirements.txt` 安装依赖，对依赖有需要的话可自行维护。
 
 > [!TIP]
 > 如果熟悉 [uv](https://uv.oaix.tech/) 的话，更推荐用uv对项目的环境进行管理。
 
-运行demo：执行 `pytest . -sv --toffee-report` 便会运行用例，运行报告会存放在 `reports` 文件夹中。
+### 运行（pytest）
+
+生成 DUT（如果需要重新生成）：
+
+```bash
+make dut
+```
+
+运行全部用例并生成 HTML 报告：
+
+```bash
+pytest -sv --toffee-report
+```
+
+运行单个用例（推荐同时设置 seed 与日志等级）：
+
+```bash
+SEED=1 REPORT_LEVEL=LOW python3 -m pytest -s -k test_sanity tests/
+```
+
+多 seed 回归（自动为每个用例展开多次运行）：
+
+```bash
+python3 -m pytest -s --regress --count 5 tests/
+```
+
+> [!NOTE]
+> 建议显式指定 `--count`，避免依赖默认次数。
+
+按 tl 列表回归（`tl/<xxx>.tl.lst` 中可指定次数与可选 wave 标记）：
+
+```bash
+python3 -m pytest -s --tl tl/<xxx>.tl.lst tests/
+```
+
+输出说明：
+
+- 每用例日志：`./report_log/<test_name>_<seed>.log`
+- HTML 报告：`./reports/report-*/report-*.html`
+
+## 以下为原仓库的README.md内容
 
 ## 如何参与
 

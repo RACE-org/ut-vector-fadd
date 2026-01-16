@@ -1,0 +1,8 @@
+# 回归用例列表示例
+# 格式：<pytest -k 名称>,<次数>
+# 注释与空行会被忽略
+
+test_sanity,3
+test_vfadd,5
+# 只指定次数，默认 wave 由 REG_WAVE 决定
+test_vfadd,2
