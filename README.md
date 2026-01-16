@@ -2,17 +2,21 @@
 
 本仓库为 **向量浮点混合加法模块(LaneFAdd)** 的验证仓库。
 
-本仓库fork自[ut-vector-fadd](https://github.com/RACE-org/ut-vector-fadd)，并对其进行了修改。
-基本完成了一个可以直接运行、随机化、回归约束的验证环境。相比原仓库主要引入了PyVSC来实现随机化和约束。以及引入了部分Numpy来处理浮点数据。
+## archX1597 版本
+
+- 本仓库 fork 自 [RACE-org/ut-vector-fadd](https://github.com/RACE-org/ut-vector-fadd)。
+- 本 fork 在上游基础验证环境之上，补充了可直接运行的验证环境实现、随机化/约束回归能力，以及更完整的文档与用例集合。
+- 复现与说明入口： [README_archX1597.md](./doc/README_archX1597.md)
 
 ## 快速入口
 
 - 任务规格： [verification_spec.md](./doc/verification_spec.md)
+- archX1597 版本说明（推荐先读）： [README_archX1597.md](./doc/README_archX1597.md)
 - 验证点/用例与覆盖反标： [verification_points.md](./doc/verification_points.md)
 - 验证环境指南（含 transaction 重点说明）： [vfadd_env_guide.md](./doc/vfadd_env_guide.md)
 - Reporter 机制说明： [reporter_guide.md](./doc/reporter_guide.md)
 - 总验证报告： [verification_report.md](./doc/verification_report.md)
-- 缺陷清单： [bug_list.md](./doc/bug_list.md)
+- 缺陷清单： [bug_list.pdf](./doc/bug_list.pdf)
 
 ## 任务详情/要求
 
@@ -31,8 +35,6 @@
 ├── Makefile
 ├── pyproject.toml
 ├── README.md
-├── report_log
-├── reports
 ├── requirements.txt
 ├── rtl
 └── tests
@@ -45,10 +47,13 @@
 - `Makefile`：包含DUT的构建和清理命令。
 - `pyproject.toml`：项目的基本信息，包含依赖的包。
 - `requirements.txt`：项目依赖的包。
-- `report_log`：每个 pytest 用例的独立日志输出目录（文件名包含 test_name 与 seed）。
-- `reports`：pytest HTML 报告输出目录（`--toffee-report` 生成）。
 - `rtl`：存放 RTL 设计，目前仓库只包含 `LaneFAdd.v`。
 - `tests`：存放测试用例。
+
+运行后会生成输出目录：
+
+- `report_log`：每个 pytest 用例的独立日志输出目录（文件名包含 test_name 与 seed）。
+- `reports`：pytest HTML 报告输出目录（`--toffee-report` 生成）。
 
 参与者可以根据自己的实际需求，对验证环境的结构进行改动。
 
@@ -101,8 +106,6 @@ python3 -m pytest -s --tl tl/<xxx>.tl.lst tests/
 
 - 每用例日志：`./report_log/<test_name>_<seed>.log`
 - HTML 报告：`./reports/report-*/report-*.html`
-
-## 以下为原仓库的README.md内容
 
 ## 如何参与
 
